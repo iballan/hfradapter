@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="200dp">
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/alhamdulillah"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <TextView
+        android:text="HEADER"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:textColor="#e2e2e2"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
