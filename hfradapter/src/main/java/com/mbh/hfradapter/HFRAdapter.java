@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,10 +60,41 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
         }
     };
 
+    /**
+     * Called on Item bind to bind views
+     *
+     * @param viewHolder: View holder to bind its view
+     * @param position:   position of the item
+     * @param type:       type of the item in the position
+     */
+    abstract protected void onBindItemViewHolder(VH viewHolder, int position, int type);
+
+    /**
+     * @param view: Inflated view from the layout of layoutId
+     * @param type: type of the view in its position
+     * @return ViewHolder initialized
+     */
+    protected abstract VH viewHolder(View view, int type);
+
+    protected abstract
+    @LayoutRes
+    int layoutId(int type);
+
+    /**
+     * To get the item list count
+     *
+     * @return return the count of items list
+     */
     public int getRealItemCount() {
         return items.size();
     }
 
+    /**
+     * To get the item at certain position
+     *
+     * @param position: position of item needed to be retained
+     * @return the item
+     */
     public T getItem(int position) {
         return items.get(position);
     }
@@ -97,11 +128,6 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     }
 
     public void setAll(List<? extends T> items) {
-        this.items.clear();
-        this.items.addAll(items);
-        notifyDataSetChanged();
-    }
-    public void setItems(List<? extends T> items) {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
@@ -233,9 +259,27 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
         }
     }
 
+    /**
+     * Get view holder for the certain position
+     *
+     * @param rv:       Recycler view which the adapter attached to
+     * @param position: position
+     * @return the view holder at the certain position
+     */
     public VH getViewHolderForItemPosition(RecyclerView rv, int position) {
         // Position here is item position
         return (VH) rv.findViewHolderForLayoutPosition(position + getHeadersCount());
+    }
+
+
+    public
+    @Nullable
+    VH getViewHolderForItemPosition(int position) {
+        // Position here is item position
+        if (wr_recyclerView.get() != null) {
+            return (VH) wr_recyclerView.get().findViewHolderForAdapterPosition(position + getHeadersCount());
+        }
+        return null;
     }
 
     public int indexOf(T object) {
@@ -244,6 +288,12 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
 
     public List<T> getItems() {
         return items;
+    }
+
+    public void setItems(List<? extends T> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
@@ -363,7 +413,23 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     }
 
     protected VH onCreateItemViewHolder(ViewGroup parent, int type) {
-        return viewHolder(inflater.inflate(layoutId(type), null, false), type);
+        View rootView = inflater.inflate(layoutId(type),
+                onCreateItemAttachToParent() ? parent : null,
+                onCreateItemAttachToParent());
+        if (onCreateItemFillWidth()) {
+            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rootView.setLayoutParams(lp);
+        }
+        return viewHolder(rootView, type);
+    }
+
+    protected boolean onCreateItemAttachToParent() {
+        return false;
+    }
+
+    protected boolean onCreateItemFillWidth() {
+        return true;
     }
 
     @Override
@@ -474,6 +540,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
             notifyItemInserted(headers.size() - 1);
         }
     }
+
     public void addHeader(Context context, @LayoutRes int layoutId) {
         addHeader(LayoutInflater.from(context).inflate(layoutId, null));
     }
@@ -539,6 +606,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
             notifyItemInserted(headers.size() + getItemCount() + footers.size() - 1);
         }
     }
+
     public void addFooter(Context context, @LayoutRes int layoutRes) {
         View footer = LayoutInflater.from(context).inflate(layoutRes, null, false);
         addFooter(footer);
@@ -576,14 +644,6 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     protected int getItemType(int position) {
         return 0;
     }
-
-    abstract protected void onBindItemViewHolder(VH viewHolder, int position, int type);
-
-    protected abstract VH viewHolder(View view, int type);
-
-    protected abstract
-    @LayoutRes
-    int layoutId(int type);
 
     public interface SpanItemInterface {
         int getGridSpan();
