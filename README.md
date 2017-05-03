@@ -77,9 +77,18 @@ You can install using Gradle:
 	    maven { url "https://jitpack.io" }
 	}
 	dependencies {
-	    compile 'com.github.iballan:hfradapter:1.0.0'
+	    compile 'com.github.iballan:hfradapter:1.0.2'
 	}
 ```
+
+### TODO:
+
+- [x] Add Scroll aware RecyclerView
+- [ ] Add Screenshots
+- [ ] Add Example of Scroll aware RecyclerView 
+- [ ] Test AutoLoadMore listener
+- [ ] Test Scroll aware RecyclerView (MBRecyclerView) 
+
 
 Contact me:
 --------
