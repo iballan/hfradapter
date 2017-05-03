@@ -123,7 +123,7 @@ public class MBRecyclerView extends RecyclerView {
         };
     }
 
-    public abstract class OnUpDownScrollListener {
+    public static abstract class OnUpDownScrollListener {
         public void onScrollUp(int dy) {}
 
         public void onScrollDown(int dy) {}
@@ -135,7 +135,7 @@ public class MBRecyclerView extends RecyclerView {
         public void onScrollStopped() {}
     }
 
-    public abstract class OnLeftRightScrollListener {
+    public static abstract class OnLeftRightScrollListener {
         public void onScrollLeft(int dx) {}
 
         public void onScrollRight(int dx) {}
