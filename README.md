@@ -56,7 +56,7 @@ Java:
 	        recyclerView.setLayoutManager(new ALinearLayoutManager(this));
 	        parallaxHfAdapter = new ParallaxHFRAdapterTest(getItems());
 	        recyclerView.setAdapter(parallaxHfAdapter);
-
+            
             parallaxHfAdapter.addHeader(this, R.layout.v_header);
 	        parallaxHfAdapter.addFooter(this, R.layout.v_footer);
 	        parallaxHfAdapter.setLoadingView(this, R.layout.v_loading);
@@ -77,7 +77,7 @@ You can install using Gradle:
 	    maven { url "https://jitpack.io" }
 	}
 	dependencies {
-	    compile 'com.github.iballan:hfradapter:1.0.3'
+	    compile 'com.github.iballan:hfradapter:1.0.4'
 	}
 ```
 
