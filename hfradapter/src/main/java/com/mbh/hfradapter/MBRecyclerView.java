@@ -72,6 +72,8 @@ public class MBRecyclerView extends RecyclerView {
                         onUpDownScrollListener.onScrolledToTop();
                     } else if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
                         onUpDownScrollListener.onScrolledToBottom();
+                    } else {
+                        onUpDownScrollListener.onScrolledToMiddle();
                     }
                     if (dy > 0) {
                         onUpDownScrollListener.onScrollDown(dy);
@@ -103,6 +105,8 @@ public class MBRecyclerView extends RecyclerView {
                         onLeftRightScrollListener.onScrolledToMostLeft();
                     } else if (!ViewCompat.canScrollHorizontally(recyclerView, 1)) {
                         onLeftRightScrollListener.onScrolledToMostRight();
+                    }else {
+                        onLeftRightScrollListener.onScrolledToMiddle();
                     }
                     if (dy > 0) {
                         onLeftRightScrollListener.onScrollRight(dx);
@@ -132,6 +136,11 @@ public class MBRecyclerView extends RecyclerView {
 
         public void onScrolledToBottom() {}
 
+        /**
+         * Not Top Not Bottom, Just in the middle :)
+         */
+        public void onScrolledToMiddle() {}
+
         public void onScrollStopped() {}
     }
 
@@ -143,6 +152,11 @@ public class MBRecyclerView extends RecyclerView {
         public void onScrolledToMostRight() {}
 
         public void onScrolledToMostLeft() {}
+
+        /**
+         * Not Left Not Right, Just in the middle :)
+         */
+        public void onScrolledToMiddle() {}
 
         public void onScrollStopped() {}
     }
