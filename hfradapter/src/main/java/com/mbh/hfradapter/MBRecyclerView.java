@@ -67,6 +67,12 @@ public class MBRecyclerView extends RecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (onUpDownScrollListener != null) {
+                    if (dy > 0) {
+                        onUpDownScrollListener.onScrollDown(dy);
+                    } else if (dy < 0) {
+                        onUpDownScrollListener.onScrollUp(dy);
+                    }
+
                     // Negative to check scrolling up, positive to check scrolling down
                     if (!ViewCompat.canScrollVertically(recyclerView, -1)) {
                         onUpDownScrollListener.onScrolledToTop();
@@ -74,11 +80,6 @@ public class MBRecyclerView extends RecyclerView {
                         onUpDownScrollListener.onScrolledToBottom();
                     } else {
                         onUpDownScrollListener.onScrolledToMiddle();
-                    }
-                    if (dy > 0) {
-                        onUpDownScrollListener.onScrollDown(dy);
-                    } else if (dy < 0) {
-                        onUpDownScrollListener.onScrollUp(dy);
                     }
                 }
             }
@@ -100,6 +101,12 @@ public class MBRecyclerView extends RecyclerView {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (onLeftRightScrollListener != null) {
+                    if (dy > 0) {
+                        onLeftRightScrollListener.onScrollRight(dx);
+                    } else if (dy < 0) {
+                        onLeftRightScrollListener.onScrollLeft(dx);
+                    }
+
                     // Negative to check scrolling left, positive to check scrolling right
                     if (!ViewCompat.canScrollHorizontally(recyclerView, -1)) {
                         onLeftRightScrollListener.onScrolledToMostLeft();
@@ -107,11 +114,6 @@ public class MBRecyclerView extends RecyclerView {
                         onLeftRightScrollListener.onScrolledToMostRight();
                     }else {
                         onLeftRightScrollListener.onScrolledToMiddle();
-                    }
-                    if (dy > 0) {
-                        onLeftRightScrollListener.onScrollRight(dx);
-                    } else if (dy < 0) {
-                        onLeftRightScrollListener.onScrollLeft(dx);
                     }
                 }
             }
