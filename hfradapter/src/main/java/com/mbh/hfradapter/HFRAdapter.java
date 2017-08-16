@@ -34,6 +34,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     private static final String P_LOADING = "HFRl";
 
     private OnItemClickedListener mOnItemClickedListener;
+    private OnItemLongClickedListener mOnItemLongClickedListener;
     private OnLoadMoreListener mOnLoadMoreListener;
 
     private ArrayList<View> headers = new ArrayList<>();
@@ -47,9 +48,12 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
 
     private WeakReference<RecyclerView> wr_recyclerView;
 
-    public HFRAdapter(List<T> items) {this.items = items;}
+    public HFRAdapter(List<T> items) {
+        this.items = items;
+    }
 
-    public HFRAdapter() {}
+    public HFRAdapter() {
+    }
 
     private RecyclerView.LayoutManager manager;
     private LayoutInflater inflater;
@@ -338,7 +342,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     }
 
     @Override
-    public final void onBindViewHolder(final RecyclerView.ViewHolder vh, int position) {
+    public final void onBindViewHolder(final RecyclerView.ViewHolder vh, final int position) {
         //check what type of view our position is
         if (isHeader(position)) {
             View v = headers.get(position);
@@ -352,14 +356,23 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
             prepareLoadingViewHolder((LoadingViewHolder) vh, loadingView);
         } else {
             //it's one of our items, display as required
-            onBindItemViewHolder((VH) vh, position - headers.size(), getItemType(position));
+            final int positionFinal = position - headers.size();
+            onBindItemViewHolder((VH) vh, positionFinal, getItemType(position));
             if (mOnItemClickedListener != null) {
                 vh.itemView.setClickable(true);
-                final int positionFinal = position - headers.size();
                 vh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mOnItemClickedListener.onItemClicked(v, positionFinal);
+                    }
+                });
+            }
+            if (mOnItemLongClickedListener != null) {
+                vh.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        mOnItemLongClickedListener.onItemLongClicked(view, positionFinal);
+                        return true; // True prevent passing the event to children when long clicked
                     }
                 });
             }
@@ -689,6 +702,10 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
 
     public interface OnItemClickedListener {
         void onItemClicked(View view, int position);
+    }
+
+    public interface OnItemLongClickedListener {
+        void onItemLongClicked(View view, int position);
     }
 
     public interface OnLoadMoreListener {
