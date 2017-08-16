@@ -658,6 +658,10 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
         return 0;
     }
 
+    public void setOnItemLongClickedListener(OnItemLongClickedListener onItemLongClickedListener) {
+        mOnItemLongClickedListener = onItemLongClickedListener;
+    }
+
     public interface SpanItemInterface {
         int getGridSpan();
     }
