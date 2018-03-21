@@ -305,7 +305,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     }
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.mOnItemClickedListener = onLoadMoreListener;
+        this.mOnLoadMoreListener = onLoadMoreListener;
     }
 
     @Override
