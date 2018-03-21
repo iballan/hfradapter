@@ -304,6 +304,10 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
         mOnItemClickedListener = onItemClickedListener;
     }
 
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.mOnItemClickedListener = onItemClickedListener;
+    }
+
     @Override
     public VH onCreateViewHolder(ViewGroup viewGroup, int type) {
         //if our position is one of our items (this comes from getItemViewType(int position) below)
