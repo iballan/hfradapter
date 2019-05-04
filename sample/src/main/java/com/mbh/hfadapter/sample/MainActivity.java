@@ -1,11 +1,12 @@
 package com.mbh.hfadapter.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
 
 import com.mbh.hfradapter.sample.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {

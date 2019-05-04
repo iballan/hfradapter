@@ -3,12 +3,6 @@ package com.mbh.hfradapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +12,14 @@ import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * Createdby MBH on 02/03/2017.
@@ -333,10 +335,10 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
             int orientation = ((LinearLayoutManager) manager).getOrientation();
             if (orientation == LinearLayoutManager.VERTICAL) {
                 layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                          ViewGroup.LayoutParams.WRAP_CONTENT);
             } else {
                 layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+                                                          ViewGroup.LayoutParams.MATCH_PARENT);
             }
         } else {
             layoutParams = new ViewGroup.LayoutParams(
@@ -346,7 +348,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
     }
 
     @Override
-    public final void onBindViewHolder(final RecyclerView.ViewHolder vh, final int position) {
+    public final void onBindViewHolder(@NonNull final RecyclerView.ViewHolder vh, final int position) {
         //check what type of view our position is
         if (isHeader(position)) {
             View v = headers.get(position);
@@ -431,8 +433,8 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
 
     protected VH onCreateItemViewHolder(ViewGroup parent, int type) {
         View rootView = inflater.inflate(layoutId(type),
-                onCreateItemAttachToParent() ? parent : null,
-                onCreateItemAttachToParent());
+                                         onCreateItemAttachToParent() ? parent : null,
+                                         onCreateItemAttachToParent());
         if (onCreateItemFillWidth()) {
             RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -514,7 +516,7 @@ public abstract class HFRAdapter<T, VH extends RecyclerView.ViewHolder> extends 
         }
         int type = getItemType(position);
         if (type == TYPE_HEADER || type == TYPE_FOOTER || type == TYPE_LOADING) {
-            throw new IllegalArgumentException("Item type cannot equal " + TYPE_HEADER + " or " + TYPE_FOOTER + " or " + TYPE_LOADING);
+            throw new IllegalArgumentException("Item type cannot equal " + TYPE_HEADER + ", " + TYPE_FOOTER + " or " + TYPE_LOADING);
         }
         return type;
     }

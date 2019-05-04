@@ -1,10 +1,11 @@
 package com.mbh.hfadapter.sample.adapters;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mbh.hfradapter.sample.R;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -16,7 +17,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public MyViewHolder(View itemView) {
         super(itemView);
-        textView = (TextView) itemView.findViewById(R.id.tv);
+        textView = itemView.findViewById(R.id.tv);
     }
 
     public void bind(String text) {

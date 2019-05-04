@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 
 import com.mbh.hfadapter.sample.adapters.HFRAdapterTest;
 import com.mbh.hfradapter.ALinearLayoutManager;
@@ -13,6 +11,9 @@ import com.mbh.hfradapter.sample.R;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HFRAdapterActivity extends AppCompatActivity {
 

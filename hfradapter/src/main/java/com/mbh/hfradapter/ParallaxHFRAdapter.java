@@ -1,15 +1,13 @@
 package com.mbh.hfradapter;
 
-import android.os.Build;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Createdby MBH on 02/03/2017.
@@ -58,27 +56,20 @@ public abstract class ParallaxHFRAdapter<T, VH extends RecyclerView.ViewHolder>
     private void translateView(float of, ClipContainer view, boolean isFooter) {
         float ofCalculated = of * SCROLL_MULTIPLIER;
         ofCalculated = isFooter ? -ofCalculated : ofCalculated;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // TODO: Fix this line here
-            view.setTranslationY(ofCalculated);
+        // TODO: Fix this line here
+        view.setTranslationY(ofCalculated);
 //            ViewCompat.setTranslationY(view, ofCalculated);
-        } else {
-            TranslateAnimation anim = new TranslateAnimation(0, 0, ofCalculated, ofCalculated);
-            anim.setFillAfter(true);
-            anim.setDuration(0);
-            view.startAnimation(anim);
-        }
         view.setOffset(Math.round(ofCalculated));
 
         if (isScaleWithParallax) {
             float scaleAmount = 1f - ofCalculated * 0.0001f;
-            ViewCompat.setScaleX(view, scaleAmount);
-            ViewCompat.setScaleY(view, scaleAmount);
+            view.setScaleX(scaleAmount);
+            view.setScaleY(scaleAmount);
         }
 
         if (isFadeWithParallax) {
             float fadeAmount = 1f - ofCalculated * 0.001f;
-            ViewCompat.setAlpha(view, fadeAmount);
+            view.setAlpha(fadeAmount);
         }
 
         view.invalidate();
@@ -93,7 +84,7 @@ public abstract class ParallaxHFRAdapter<T, VH extends RecyclerView.ViewHolder>
     public final VH onCreateViewHolder(ViewGroup viewGroup, int type) {
         //if our position is one of our items (this comes from getItemViewType(int position) below)
         if (type != TYPE_HEADER && type != TYPE_FOOTER && type != TYPE_LOADING) {
-            return (VH) onCreateItemViewHolder(viewGroup, type);
+            return onCreateItemViewHolder(viewGroup, type);
             //else if we have a header
         } else if (type == TYPE_LOADING && getLoadingView() != null) {
             FrameLayout frameLayout = new FrameLayout(viewGroup.getContext());

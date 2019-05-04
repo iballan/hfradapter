@@ -3,8 +3,6 @@ package com.mbh.hfadapter.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 
 import com.mbh.hfadapter.sample.adapters.ParallaxHFRAdapterTest;
 import com.mbh.hfradapter.ALinearLayoutManager;
@@ -12,6 +10,9 @@ import com.mbh.hfradapter.sample.R;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ParallaxHFRAdapterActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class ParallaxHFRAdapterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hfradapter);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         // I used ALinearLayoutManager to avoid and ignore bugs in recycler view
         recyclerView.setLayoutManager(new ALinearLayoutManager(this));
         prepareAdapter();

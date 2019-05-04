@@ -2,10 +2,12 @@ package com.mbh.hfradapter;
 
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Createdby MBH on 02/05/2017.
@@ -65,7 +67,7 @@ public class MBRecyclerView extends RecyclerView {
     private OnScrollListener getWrappedUpDownScrollListener(final OnUpDownScrollListener onUpDownScrollListener) {
         return new OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (onUpDownScrollListener != null) {
                     if (dy > 0) {
                         onUpDownScrollListener.onScrollDown(dy);
@@ -85,7 +87,7 @@ public class MBRecyclerView extends RecyclerView {
             }
 
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (onUpDownScrollListener != null) {
                         onUpDownScrollListener.onScrollStopped();
@@ -108,9 +110,9 @@ public class MBRecyclerView extends RecyclerView {
                     }
 
                     // Negative to check scrolling left, positive to check scrolling right
-                    if (!ViewCompat.canScrollHorizontally(recyclerView, -1)) {
+                    if (!recyclerView.canScrollHorizontally(-1)) {
                         onLeftRightScrollListener.onScrolledToMostLeft();
-                    } else if (!ViewCompat.canScrollHorizontally(recyclerView, 1)) {
+                    } else if (!recyclerView.canScrollHorizontally(1)) {
                         onLeftRightScrollListener.onScrolledToMostRight();
                     }else {
                         onLeftRightScrollListener.onScrolledToMiddle();
